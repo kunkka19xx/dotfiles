@@ -1,7 +1,7 @@
 # theme = "rose-pine"
 font-family = "Inconsolata Nerd Font Mono Bold"
 font-size = 30
-background-opacity = 0.81
+background-opacity = 0.98
 background-blur-radius = 0
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = hidden
