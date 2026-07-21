@@ -1,6 +1,7 @@
 local is_mac = vim.fn.has("mac") == 1
 return {
     "wojciech-kulik/xcodebuild.nvim",
+    enabled = is_mac,
     dependencies = {
         "ibhagwan/fzf-lua",
         "MunifTanjim/nui.nvim",
@@ -20,6 +21,25 @@ return {
             },
             code_coverage = {
                 enabled = true,
+            },
+            project_manager = {
+                should_update_project = function(path)
+                    -- Only manage files that live next to an .xcodeproj.
+                    -- Walk up from the file; if we find a sibling *.xcodeproj
+                    -- before leaving the repo, accept. Otherwise skip.
+                    local dir = path:match("(.*/)")
+                    while dir and #dir > 1 do
+                        if vim.fn.glob(dir .. "*.xcodeproj") ~= "" then
+                            -- still skip SPM/build noise inside the iOS tree
+                            if path:match("/%.build/") then return false end
+                            if path:match("/DerivedData/") then return false end
+                            if path:match("/%.swiftpm/") then return false end
+                            return true
+                        end
+                        dir = dir:match("(.*/)[^/]+/$")
+                    end
+                    return false
+                end,
             },
         })
 

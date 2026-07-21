@@ -56,15 +56,16 @@ return {
 
             local is_mac = vim.fn.has("mac") == 1
             if is_mac then
-                vim.lsp.config["rust_analyzer"] = {
+                vim.lsp.config["swift_mesonls"] = { -- sourcekit doesn't work, so it's a fake name
                     capabilities = capabilities,
                     root_dir = require("lspconfig.util").root_pattern(
                         "Package.swift",
+                        "Project.swift",
                         ".git",
                         "*.xcodeproj",
                         "*.xcworkspace"
                     ),
-                    cmd = { "xcrun", "sourcekit-lsp" },
+                    cmd = { "xcrun", "--find", "sourcekit-lsp" },
                     on_attach = function(client, bufnr)
                         if vim.lsp.inlay_hint then
                             vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
@@ -152,6 +153,7 @@ return {
                     vim.lsp.enable("buf_language_server")
                 end,
             })
+
             vim.lsp.enable({
                 "ts_ls",
                 "eslint",
