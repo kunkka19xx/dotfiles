@@ -1,14 +1,11 @@
+-- My own plugin: https://github.com/kunkka19xx/present.nvim
+-- (developed locally at ~/Documents/git/present.nvim)
 return {
-    'tjdevries/present.nvim',
+    "kunkka19xx/present.nvim",
+    lazy = true,
+    cmd = "PresentStart",
+    ft = "markdown",
     config = function()
-        require("present").setup {
-            options = {
-                syntax = {
-                    comment = "%%",
-                    stop = "<!%-%-%s*stop%s*%-%->",
-                },
-                executors = {},
-            }
-        }
-    end
+        require("present").setup {}
+    end,
 }
